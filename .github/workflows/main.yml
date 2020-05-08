@@ -1,9 +1,8 @@
-# This is a basic workflow to help you get started with Actions
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
 
-name: CI
+name: Node.js Package
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
   push:
     branches: [ master ]
@@ -12,18 +11,16 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [9.x, 10.x, 12.x]
-
     steps:
-    - uses: actions/npm@master
-    - name: Install dependencies and build the app
-    - run: npm install
-    - run: npm run build
-    - uses: docker://circleci/node:8-browsers
-    - name: Run integration tests
-    - run: npm run e2e:github
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - run: npm install
+      - run: npm run build
+
+  runtest:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: docker://circleci/node:8-browsers
+      - run: npm run e2e:github

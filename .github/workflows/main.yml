@@ -28,7 +28,7 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/npm@master
-    - needs: installdependencies
+    # - needs: installdependencies
       name: Build app
       run: npm run build
   
@@ -40,7 +40,7 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: docker://circleci/node:8-browsers
-    - needs: build
+    # - needs: build
       name: Run test
       run: npm run e2e:github
 

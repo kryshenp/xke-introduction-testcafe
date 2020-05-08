@@ -17,10 +17,11 @@ jobs:
       - uses: actions/setup-node@v1
       - run: npm install
       - run: npm run build
-
-  runtest:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
       - uses: docker://circleci/node:8-browsers
       - run: npm run e2e:github
+
+  # runtest:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+      
